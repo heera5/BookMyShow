@@ -3,13 +3,13 @@ package com.example.bootproject.BookMyShow.entity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.springframework.stereotype.Component;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+
 import jakarta.persistence.OneToOne;
 @Entity
 

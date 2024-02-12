@@ -2,7 +2,7 @@ package com.example.bootproject.BookMyShow.entity;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
