@@ -16,17 +16,17 @@ import jakarta.persistence.OneToOne;
 public class Screen {
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int screenNumber;
+	private int screenId;
 	private LocalTime showTime;
 	private LocalDate showDate;
 	@OneToOne
 	private Movie movie;
 	private Status status;
-	public int getScreenNumber() {
-		return screenNumber;
+	public int getScreenId() {
+		return screenId;
 	}
-	public void setScreenNumber(int screenNumber) {
-		this.screenNumber = screenNumber;
+	public void setScreenId(int screenId) {
+		this.screenId = screenId;
 	}
 	public LocalTime getShowTime() {
 		return showTime;
@@ -54,7 +54,7 @@ public class Screen {
 	}
 	@Override
 	public String toString() {
-		return "Screen [screenNumber=" + screenNumber + ", showTime=" + showTime + ", showDate=" + showDate
+		return "Screen [screenId=" + screenId + ", showTime=" + showTime + ", showDate=" + showDate + ", movie=" + movie
 				+ ", status=" + status + "]";
 	}
 	

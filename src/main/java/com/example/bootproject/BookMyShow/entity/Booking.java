@@ -13,7 +13,7 @@ public class Booking {
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int bookingId;
-    private String showName;
+    private String movieName;//change it to movie name
 	private LocalDate showDate;
 	private LocalTime showTime;
 	private int ticketCount;
@@ -24,11 +24,11 @@ public class Booking {
 	public void setBookingId(int bookingId) {
 		this.bookingId = bookingId;
 	}
-	public String getShowName() {
-		return showName;
+	public String getMovieName() {
+		return movieName;
 	}
-	public void setShowName(String showName) {
-		this.showName = showName;
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
 	}
 	public LocalDate getShowDate() {
 		return showDate;
@@ -56,7 +56,7 @@ public class Booking {
 	}
 	@Override
 	public String toString() {
-		return "Booking [bookingId=" + bookingId + ", showName=" + showName + ", showDate=" + showDate + ", showTime="
+		return "Booking [bookingId=" + bookingId + ", movieName=" + movieName + ", showDate=" + showDate + ", showTime="
 				+ showTime + ", ticketCount=" + ticketCount + ", totalAmount=" + totalAmount + "]";
 	}
 	
