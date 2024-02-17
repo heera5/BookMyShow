@@ -14,6 +14,7 @@ public class AdminDao {
     
 	@Autowired
 	AdminRepo adminrepo;
+	
 	public Admin saveAdmin(Admin admin) {
 		return adminrepo.save(admin);
 		
@@ -55,4 +56,14 @@ public class AdminDao {
 		return exadmin;
 	}
 
+	public Admin findbyMail(String adminemail) 
+	{
+		Admin admin=findbyMail(adminemail);
+		if(admin!=null)
+		{
+			return admin;
+		}
+		return null;
+	}
+	
 }

@@ -2,7 +2,7 @@ package com.example.bootproject.BookMyShow.dto;
 
 import java.util.List;
 
-import com.example.bootproject.BookMyShow.entity.Booking;
+
 
 import jakarta.persistence.OneToMany;
 
@@ -12,8 +12,7 @@ public class UserDto {
 		private String userName;
 		private String userMail;
 		
-		@OneToMany
-		private List<Booking> listofbooking;
+		
 
 		public int getUserId() {
 			return userId;
@@ -39,19 +38,13 @@ public class UserDto {
 			this.userMail = userMail;
 		}
 
-		public List<Booking> getListofbooking() {
-			return listofbooking;
-		}
-
-		public void setListofbooking(List<Booking> listofbooking) {
-			this.listofbooking = listofbooking;
-		}
-
 		@Override
 		public String toString() {
-			return "UserDto [userId=" + userId + ", userName=" + userName + ", userMail=" + userMail
-					+ ", listofbooking=" + listofbooking + "]";
+			return "UserDto [userId=" + userId + ", userName=" + userName + ", userMail=" + userMail + "]";
 		}
+
+		
+
 		
 		
 

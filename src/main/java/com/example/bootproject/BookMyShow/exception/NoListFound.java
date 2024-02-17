@@ -9,7 +9,7 @@ public class NoListFound extends RuntimeException {
 	}
 
 	public NoListFound(String message) {
-		super();
+		
 		this.message = message;
 	}
 

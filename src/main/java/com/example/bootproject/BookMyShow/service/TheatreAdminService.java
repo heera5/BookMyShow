@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.bootproject.BookMyShow.dao.TheatreAdminDao;
+import com.example.bootproject.BookMyShow.dao.TheatreDao;
 import com.example.bootproject.BookMyShow.dto.TheatreAdminDto;
+import com.example.bootproject.BookMyShow.entity.Theatre;
 import com.example.bootproject.BookMyShow.entity.TheatreAdmin;
 import com.example.bootproject.BookMyShow.exception.NoListFound;
 import com.example.bootproject.BookMyShow.exception.TheatreAdminNotFound;
@@ -21,6 +23,9 @@ public class TheatreAdminService {
 
 	@Autowired
 	TheatreAdminDao theatreadmindao;
+	
+	@Autowired
+	TheatreDao theatredao;
 	
 	
 	
@@ -98,6 +103,29 @@ public class TheatreAdminService {
 		}
 		throw new NoListFound("no list found");
 		}
+	
+	public ResponseEntity<ResponseStructure<TheatreAdminDto>> assignTheatreToTheatreAdmin(int theatreAdminId,int theatreId){
+		TheatreAdminDto taDto=new TheatreAdminDto();
+		ModelMapper mapper=new ModelMapper();
+		TheatreAdmin tAdmin=theatreadmindao.findTheatreAdmin(theatreAdminId);
+		Theatre theatre=theatredao.findTheatre(theatreId);
+		if(tAdmin != null) {
+			if(theatre != null) {
+				tAdmin.setTheatre(theatre);
+				mapper.map(theatreadmindao.updateTheatreAdmin(tAdmin, theatreAdminId), taDto);
+				ResponseStructure<TheatreAdminDto> structure=new ResponseStructure<TheatreAdminDto>();
+				structure.setMessage("assign theatre to Theatre Admin success");
+				structure.setStatus(HttpStatus .OK.value());
+				structure.setData(taDto);
+				return new ResponseEntity<ResponseStructure<TheatreAdminDto>>(structure,HttpStatus.OK);
+			}
+			else {
+				throw new TheatreAdminNotFound("theatre not assigned to the theatre admin because,theatre not found for the given id");
+			}
+			
+		}
+		throw new TheatreAdminNotFound("we can't assign theatre to theatre admin because,theatre Admin not found for the given id");
+	}
 
 
 }

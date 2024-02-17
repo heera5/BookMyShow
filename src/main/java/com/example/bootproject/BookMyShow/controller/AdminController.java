@@ -58,5 +58,12 @@ public class AdminController {
 			System.out.println("found all laptop");
 			return adminservice.findAllAdmin(admin);
 		}
+		
+		@GetMapping("adminlogin")
+		public ResponseEntity<ResponseStructure<AdminDto>>adminlogin(String adminemail,String admilpassword)
+		{
+			System.out.println("login done");
+			return adminservice.adminLogin(adminemail, admilpassword);
+		}
 
 }

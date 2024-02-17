@@ -9,7 +9,7 @@ public class TheatreUnreachable extends RuntimeException{
 	}
 
 	public TheatreUnreachable(String message) {
-		super();
+		
 		this.message = message;
 	}
 	

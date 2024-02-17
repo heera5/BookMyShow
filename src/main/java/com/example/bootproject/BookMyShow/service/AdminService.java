@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import com.example.bootproject.BookMyShow.dao.AdminDao;
 import com.example.bootproject.BookMyShow.dto.AdminDto;
 import com.example.bootproject.BookMyShow.entity.Admin;
+import com.example.bootproject.BookMyShow.entity.Theatre;
 import com.example.bootproject.BookMyShow.exception.AdminNotFound;
 import com.example.bootproject.BookMyShow.exception.NoListFound;
+import com.example.bootproject.BookMyShow.repo.TheatreRepo;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
 
 
@@ -22,6 +24,12 @@ public class AdminService {
 
 		@Autowired
 		AdminDao admindao;
+		
+		@Autowired
+		TheatreRepo theatrerepo;
+		
+		@Autowired
+		Theatre theatre;
 		
 		
 		
@@ -53,7 +61,7 @@ public class AdminService {
 				structure.setData(dto);
 				return new ResponseEntity<ResponseStructure<AdminDto>>(structure,HttpStatus.FOUND);
 			}
-			throw new AdminNotFound("Laptop is not there!!!!!!!!");
+			throw new AdminNotFound("Admin is not there!!!!!!!!");
 			}
 		
 		public ResponseEntity<ResponseStructure<AdminDto>> deleteAdmin(int adminid){
@@ -99,4 +107,46 @@ public class AdminService {
 			}
 			throw new NoListFound("no list found");
 			}
+		
+		public ResponseEntity<ResponseStructure<AdminDto>> adminLogin(String adminMail,String adminPassword)
+		{
+			
+			AdminDto adminDto=new AdminDto();
+			ModelMapper modelMapper=new ModelMapper();
+			Admin admin=admindao.findbyMail(adminMail);
+			
+			ResponseStructure<AdminDto> structure=new ResponseStructure<AdminDto>();
+			if(admin!=null)
+			{
+				if(admin.getAdminPassword().equals(adminPassword))
+				{
+					modelMapper.map(admin, adminDto);
+				 structure.setData(adminDto);
+				 structure.setMessage("Admin login succesfully");
+				 structure.setStatus(HttpStatus.ACCEPTED.value());
+				 
+				 return new ResponseEntity<ResponseStructure<AdminDto>>(structure,HttpStatus.ACCEPTED);
+				} 
+				throw new AdminNotFound("admin password is not matching");
+				
+			}
+			throw new AdminNotFound("admin object not found for the given mail id");
+		}
+		
+		public ResponseEntity<ResponseStructure<AdminDto>> assignTheatresToAdmin(int adminId,List<Integer> theatreIds){
+			AdminDto aDto=new AdminDto();
+			ModelMapper mapper=new ModelMapper();
+			Admin admin=admindao.findAdmin(adminId);
+			if(admin != null) {
+				List<Theatre> extheatres=theatrerepo.findAllById(theatreIds);
+				admin.setListofTheatre(extheatres);
+				mapper.map(admindao.updateAdmin(admin, adminId), aDto);
+				ResponseStructure<AdminDto> structure=new ResponseStructure<AdminDto>();
+				structure.setMessage("assign theatre to Admin success");
+				structure.setStatus(HttpStatus .OK.value());
+				structure.setData(aDto);
+				return new ResponseEntity<ResponseStructure<AdminDto>>(structure,HttpStatus.OK);
+			}
+			throw new AdminNotFound("we can't assign theatres to Admin because,Admin not found for the given id");
+		}
 }

@@ -9,7 +9,7 @@ public class NoMovieFound extends RuntimeException{
 	}
 
 	public NoMovieFound(String message) {
-		super();
+		
 		this.message = message;
 	}
 	

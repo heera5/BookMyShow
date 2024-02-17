@@ -1,6 +1,6 @@
 package com.example.bootproject.BookMyShow.exception;
 
-public class ScreenNotFound extends RuntimeException {
+public class SeatNotFound extends RuntimeException {
 
 	String message;
 
@@ -8,13 +8,15 @@ public class ScreenNotFound extends RuntimeException {
 		return message;
 	}
 
-	public ScreenNotFound(String message) {
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public SeatNotFound(String message) {
 		
 		this.message = message;
 	}
 	
-	
-
 	
 	
 }

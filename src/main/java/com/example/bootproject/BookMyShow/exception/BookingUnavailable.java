@@ -9,7 +9,7 @@ public class BookingUnavailable extends RuntimeException{
 	}
 
 	public BookingUnavailable(String message) {
-		super();
+		
 		this.message = message;
 	}
 

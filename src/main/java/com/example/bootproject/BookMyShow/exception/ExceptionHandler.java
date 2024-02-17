@@ -91,7 +91,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	
 	@org.springframework.web.bind.annotation.ExceptionHandler
-	public ResponseEntity<ResponseStructure<String>> ReviewNotFoundException(AdminNotFound ex)
+	public ResponseEntity<ResponseStructure<String>> ReviewNotFoundException(ReviewNotFound ex)
 	{
 		 ResponseStructure<String> structure=new ResponseStructure<String>();
 		 structure.setData(ex.getMessage());
@@ -100,4 +100,23 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 		 return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
 	}
 	
+	@org.springframework.web.bind.annotation.ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> SeatNotFoundException(SeatNotFound ex)
+	{
+		 ResponseStructure<String> structure=new ResponseStructure<String>();
+		 structure.setData(ex.getMessage());
+		 structure.setMessage("Seat not found");
+		 structure.setStatus(HttpStatus.NOT_FOUND.value());
+		 return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	
+	@org.springframework.web.bind.annotation.ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> TicketNotFoundException(TicketNotFound ex)
+	{
+		 ResponseStructure<String> structure=new ResponseStructure<String>();
+		 structure.setData(ex.getMessage());
+		 structure.setMessage("Ticket not found");
+		 structure.setStatus(HttpStatus.NOT_FOUND.value());
+		 return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
 }

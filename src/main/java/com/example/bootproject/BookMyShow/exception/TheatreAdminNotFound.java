@@ -9,7 +9,7 @@ public class TheatreAdminNotFound extends RuntimeException{
 	}
 
 	public TheatreAdminNotFound(String message) {
-		super();
+		
 		this.message = message;
 	}
 
