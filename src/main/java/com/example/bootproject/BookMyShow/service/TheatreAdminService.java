@@ -27,7 +27,8 @@ public class TheatreAdminService {
 	@Autowired
 	TheatreDao theatredao;
 	
-	
+	@Autowired
+	TheatreAdmin theatreadmin;
 	
 	public ResponseEntity<ResponseStructure<TheatreAdminDto>> saveTheatreAdmin(TheatreAdmin theatreadmin){
 		
@@ -42,7 +43,7 @@ public class TheatreAdminService {
 		structure.setData(dto);
 		return new ResponseEntity<ResponseStructure<TheatreAdminDto>>(structure,HttpStatus.CREATED);
 	}
-	throw new TheatreAdminNotFound("no student found");
+	throw new TheatreAdminNotFound("no theatreadmin found");
 	}
 	
 	public ResponseEntity<ResponseStructure<TheatreAdminDto>> findTheatreAdmin(int theatreadminid){
@@ -57,7 +58,7 @@ public class TheatreAdminService {
 			structure.setData(dto);
 			return new ResponseEntity<ResponseStructure<TheatreAdminDto>>(structure,HttpStatus.FOUND);
 		}
-		throw new TheatreAdminNotFound("Laptop is not there!!!!!!!!");
+		throw new TheatreAdminNotFound("theatreadmin is not there!!!!!!!!");
 		}
 	
 	public ResponseEntity<ResponseStructure<TheatreAdminDto>> deleteTheatreAdmin(int theatreadminid){
@@ -72,7 +73,7 @@ public class TheatreAdminService {
 			structure.setData(dto);
 			return new ResponseEntity<ResponseStructure<TheatreAdminDto>>(structure,HttpStatus.OK);
 		}
-		throw new TheatreAdminNotFound("Laptop is not there!!!!!!!!");
+		throw new TheatreAdminNotFound("theatreadmin is not there!!!!!!!!");
 		}
 	
 	public ResponseEntity<ResponseStructure<TheatreAdminDto>> updateTheatreAdmin(TheatreAdmin theatreadmin, int theatreadminid){
@@ -86,7 +87,7 @@ public class TheatreAdminService {
 				structure.setData(dto);
 				return new ResponseEntity<ResponseStructure<TheatreAdminDto>>(structure,HttpStatus.OK);
 			}
-			throw new TheatreAdminNotFound("Laptop is not there!!!!!!!!");
+			throw new TheatreAdminNotFound("theatreadmin is not there!!!!!!!!");
 			}
 	public ResponseEntity<ResponseStructure<List<TheatreAdmin>>>  findAllStudent(List<TheatreAdmin> admin){
 		
@@ -120,11 +121,28 @@ public class TheatreAdminService {
 				return new ResponseEntity<ResponseStructure<TheatreAdminDto>>(structure,HttpStatus.OK);
 			}
 			else {
-				throw new TheatreAdminNotFound("theatre not assigned to the theatre admin because,theatre not found for the given id");
+				throw new TheatreAdminNotFound("no theatreadmin found");
 			}
 			
 		}
-		throw new TheatreAdminNotFound("we can't assign theatre to theatre admin because,theatre Admin not found for the given id");
+		throw new TheatreAdminNotFound("no theatre found");
+	}
+	
+	public ResponseEntity<ResponseStructure<TheatreAdmin>>theatreadminlogin(String theatreadminemail,String theatreadminpassword){
+		List<TheatreAdmin> theatreAdmin=theatreadmindao.findAllTheatreAdmin(null);
+			if(theatreadmin.getTheatreAdminEmail().equals(theatreadminemail))
+			{
+				if(theatreadmin.getTheatreAdminPassword().equals(theatreadminpassword)) {
+					ResponseStructure<TheatreAdmin>Structure=new ResponseStructure<TheatreAdmin>() ;
+					Structure.setMessage("theatre admin login successfull");
+					Structure.setStatus(HttpStatus.FOUND.value());
+					return new ResponseEntity<ResponseStructure<TheatreAdmin>>(Structure,HttpStatus.FOUND);
+				}
+				throw new TheatreAdminNotFound("theatre admin login unsuccessfull");
+				
+			}
+		
+		return null;
 	}
 
 

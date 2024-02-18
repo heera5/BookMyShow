@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 import com.example.bootproject.BookMyShow.dao.MovieDao;
 import com.example.bootproject.BookMyShow.dto.MovieDto;
 import com.example.bootproject.BookMyShow.entity.Movie;
+import com.example.bootproject.BookMyShow.entity.Review;
 import com.example.bootproject.BookMyShow.exception.NoListFound;
 import com.example.bootproject.BookMyShow.exception.NoMovieFound;
+import com.example.bootproject.BookMyShow.exception.ReviewNotFound;
+import com.example.bootproject.BookMyShow.repo.ReviewRepo;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
 
 
@@ -22,7 +25,8 @@ public class MovieService {
 	@Autowired
 	MovieDao moviedao;
 	
-	
+	@Autowired
+	ReviewRepo reviewrepo;
 	
 	public ResponseEntity<ResponseStructure<MovieDto>> saveMovie(Movie movie){
 		
@@ -37,7 +41,7 @@ public class MovieService {
 		structure.setData(dto);
 		return new ResponseEntity<ResponseStructure<MovieDto>>(structure,HttpStatus.CREATED);
 	}
-	throw new NoMovieFound("no student found");
+	throw new NoMovieFound("no movie found");
 	}
 	
 	public ResponseEntity<ResponseStructure<MovieDto>> findMovie(int movieid){
@@ -52,7 +56,7 @@ public class MovieService {
 			structure.setData(dto);
 			return new ResponseEntity<ResponseStructure<MovieDto>>(structure,HttpStatus.FOUND);
 		}
-		throw new NoMovieFound("Laptop is not there!!!!!!!!");
+		throw new NoMovieFound("movie is not there!!!!!!!!");
 		}
 	
 	public ResponseEntity<ResponseStructure<MovieDto>> deleteMovie(int movieid){
@@ -67,7 +71,7 @@ public class MovieService {
 			structure.setData(dto);
 			return new ResponseEntity<ResponseStructure<MovieDto>>(structure,HttpStatus.OK);
 		}
-		throw new NoMovieFound("Laptop is not there!!!!!!!!");
+		throw new NoMovieFound("movie is not there!!!!!!!!");
 		}
 	
 	public ResponseEntity<ResponseStructure<MovieDto>> updateMovie(Movie movie, int movieid){
@@ -81,7 +85,7 @@ public class MovieService {
 				structure.setData(dto);
 				return new ResponseEntity<ResponseStructure<MovieDto>>(structure,HttpStatus.OK);
 			}
-			throw new NoMovieFound("Laptop is not there!!!!!!!!");
+			throw new NoMovieFound("movie is not there!!!!!!!!");
 			}
 	public ResponseEntity<ResponseStructure<List<Movie>>>  findAllMovie(List<Movie> movie){
 		
@@ -98,4 +102,23 @@ public class MovieService {
 		}
 		throw new NoListFound("no list found");
 		}
+	
+	public ResponseEntity<ResponseStructure<MovieDto>>Assignreviewtomovie(int movieid,List<Integer> reviewid){
+		MovieDto mdto=new MovieDto();
+		ModelMapper m=new ModelMapper();
+		Movie m1=moviedao.findMovie(movieid);
+		if(m1!=null) {
+			List<Review>exreview=reviewrepo.findAllById(reviewid);
+			m1.setReview(exreview);
+			m.map(moviedao.updateMovie(m1, movieid), moviedao);
+			ResponseStructure<MovieDto> structure=new ResponseStructure<MovieDto>();
+			structure.setMessage("assign theatreAdmin to admin succesffuly");
+			structure.setStatus(HttpStatus .OK.value());
+			structure.setData(mdto);
+			return new ResponseEntity<ResponseStructure<MovieDto>>(structure,HttpStatus.OK);
+		}
+		throw new ReviewNotFound("we can't assign review to movie");
+	}
+	
+	
 }

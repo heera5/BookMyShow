@@ -54,16 +54,30 @@ public class AdminController {
 			
 
 		@GetMapping("found all")
-		public ResponseEntity<ResponseStructure<List<Admin>>>  findAllAdmin(List<Admin> admin){
+		public ResponseEntity<ResponseStructure<List<Admin>>>  findAllAdmin(@RequestBody List<Admin> admin){
 			System.out.println("found all laptop");
 			return adminservice.findAllAdmin(admin);
 		}
 		
 		@GetMapping("adminlogin")
-		public ResponseEntity<ResponseStructure<AdminDto>>adminlogin(String adminemail,String admilpassword)
+		public ResponseEntity<ResponseStructure<AdminDto>>adminlogin(@RequestParam String adminemail,@RequestParam String admilpassword)
 		{
 			System.out.println("login done");
 			return adminservice.adminLogin(adminemail, admilpassword);
+		
 		}
-
+		
+		@PutMapping("assgintheatretoadmin")
+		public ResponseEntity<ResponseStructure<AdminDto>> assignTheatresToAdmin(@RequestParam String adminEmail,@RequestParam String adminPassword,@RequestParam int adminId,List<Integer> theatreIds){
+			System.out.println("Assigning theatre to admin successful");
+			return adminservice.assignTheatresToAdmin(adminEmail, adminPassword, adminId, theatreIds);
+		}
+			
+			
+		@PutMapping("assgintheatreadmintoadmin")
+		public ResponseEntity<ResponseStructure<AdminDto>> assignTheatreAdminToAdmin(@RequestParam String adminEmail,@RequestParam String adminPassword,@RequestParam int theatreadminId,List<Integer> theatreadminId1){
+			System.out.println("Assigning theatre to admin successful");
+			return adminservice.assignTheatreAdminToAdmin(adminEmail, adminPassword, theatreadminId, theatreadminId1);
+		}
+			
 }

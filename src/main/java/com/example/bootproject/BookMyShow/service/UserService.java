@@ -10,9 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.bootproject.BookMyShow.dao.UserDao;
 import com.example.bootproject.BookMyShow.dto.UserDto;
+
 import com.example.bootproject.BookMyShow.entity.User;
-import com.example.bootproject.BookMyShow.exception.NoListFound;
+
 import com.example.bootproject.BookMyShow.exception.UserNotFound;
+import com.example.bootproject.BookMyShow.exception.NoListFound;
+
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
 @Service
 public class UserService {
@@ -35,7 +38,7 @@ public class UserService {
 		structure.setData(dto);
 		return new ResponseEntity<ResponseStructure<UserDto>>(structure,HttpStatus.CREATED);
 	}
-	throw new UserNotFound("no student found");
+	throw new UserNotFound("no user found");
 	}
 	
 	public ResponseEntity<ResponseStructure<UserDto>> findUser(int userid){
@@ -50,7 +53,7 @@ public class UserService {
 			structure.setData(dto);
 			return new ResponseEntity<ResponseStructure<UserDto>>(structure,HttpStatus.FOUND);
 		}
-		throw new UserNotFound("Laptop is not there!!!!!!!!");
+		throw new UserNotFound("User is not there!!!!!!!!");
 		}
 	
 	public ResponseEntity<ResponseStructure<UserDto>> deleteUser(int userid){
@@ -65,7 +68,7 @@ public class UserService {
 			structure.setData(dto);
 			return new ResponseEntity<ResponseStructure<UserDto>>(structure,HttpStatus.OK);
 		}
-		throw new UserNotFound("Laptop is not there!!!!!!!!");
+		throw new UserNotFound("User is not there!!!!!!!!");
 		}
 	
 	public ResponseEntity<ResponseStructure<UserDto>> updateUser(User user, int userid){
@@ -79,7 +82,7 @@ public class UserService {
 				structure.setData(dto);
 				return new ResponseEntity<ResponseStructure<UserDto>>(structure,HttpStatus.OK);
 			}
-			throw new UserNotFound("Laptop is not there!!!!!!!!");
+			throw new UserNotFound("User is not there!!!!!!!!");
 			}
 	public ResponseEntity<ResponseStructure<List<User>>>  findAllUser(List<User> user){
 		
@@ -97,4 +100,28 @@ public class UserService {
 		throw new NoListFound("no list found");
 		}
 
+	public ResponseEntity<ResponseStructure<UserDto>> userLogin(String useremail,String userPassword)
+	{
+		
+		UserDto userdto=new UserDto();
+		ModelMapper modelMapper=new ModelMapper();
+		User user=userdao.findbyMail(useremail);
+		
+		ResponseStructure<UserDto> structure=new ResponseStructure<UserDto>();
+		if(user!=null)
+		{
+			if(user.getUserPassword().equals(userPassword))
+			{
+				modelMapper.map(user, userdto);
+			 structure.setData(userdto);
+			 structure.setMessage("User login succesfully");
+			 structure.setStatus(HttpStatus.ACCEPTED.value());
+			 
+			 return new ResponseEntity<ResponseStructure<UserDto>>(structure,HttpStatus.ACCEPTED);
+			} 
+			throw new UserNotFound("user password is not matching,log in failed");
+			
+		}
+		throw new UserNotFound("user object not found for the given mail id");
+	}
 }

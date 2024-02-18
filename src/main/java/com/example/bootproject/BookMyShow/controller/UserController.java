@@ -54,10 +54,16 @@ public class UserController {
 				
 
 			@GetMapping("found all")
-			public ResponseEntity<ResponseStructure<List<User>>>  findAllUser(List<User> user){
-				System.out.println("found all laptop");
+			public ResponseEntity<ResponseStructure<List<User>>>  findAllUser(List<User> user)
+			{
+				System.out.println("found all user");
 				return userservice.findAllUser(user);
 			}
 			
-
+			@PutMapping("userlogin")
+			public ResponseEntity<ResponseStructure<UserDto>> userLogin(@RequestParam String useremail,@RequestParam String userPassword)
+			{
+				System.out.println("login successful");
+				return userservice.userLogin(useremail, userPassword);
+			}
 }

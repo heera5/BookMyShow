@@ -58,4 +58,9 @@ public class TheatreContoller {
 		
 		
 		}
+		@PutMapping("assignscreentotheatre")
+		public ResponseEntity<ResponseStructure<List<Theatre>>> assignscreentotheatre(@RequestParam int theatreid,@RequestParam List<Integer> screenid){
+			System.out.println("list od theatre");
+			return theatreservice.assignscreentotheatre(theatreid, screenid);
+		}
 }

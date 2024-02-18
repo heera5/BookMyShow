@@ -1,12 +1,19 @@
 package com.example.bootproject.BookMyShow.service;
 
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.bootproject.BookMyShow.dao.ReviewDao;
+import com.example.bootproject.BookMyShow.dto.MovieDto;
+import com.example.bootproject.BookMyShow.entity.Admin;
+import com.example.bootproject.BookMyShow.entity.Movie;
 import com.example.bootproject.BookMyShow.entity.Review;
+import com.example.bootproject.BookMyShow.exception.NoListFound;
 import com.example.bootproject.BookMyShow.exception.ReviewNotFound;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
 
@@ -15,6 +22,9 @@ public class ReviewService {
 
 	@Autowired
 	ReviewDao reviewdao;
+	
+	@Autowired
+	Review review;
 	
 	public ResponseEntity<ResponseStructure<Review>> saveReview(Review review){
 		ResponseStructure <Review>structure=new ResponseStructure<Review>();
@@ -62,7 +72,16 @@ public class ReviewService {
 					structure.setData(l);
 					return new ResponseEntity<ResponseStructure<Review>>(structure,HttpStatus.OK);
 				}
-				 throw new ReviewNotFound("laptoupdate failed");
+				 throw new ReviewNotFound("review update failed");
 				}
 
+		public ResponseEntity<ResponseStructure<List<Review>>> findAllReview(List<Review> review) {
+			ResponseStructure<List<Review>> structure=new ResponseStructure<List<Review>>();
+			structure.setMessage("find all Review successfull");
+			structure.setStatus(HttpStatus .FOUND.value());
+			structure.setData(reviewdao.findAllReview(review) );
+			return new ResponseEntity<ResponseStructure<List<Review>>>(structure,HttpStatus.FOUND);
+		}
+		
+		
 }

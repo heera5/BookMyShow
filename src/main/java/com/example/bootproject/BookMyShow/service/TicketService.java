@@ -94,7 +94,7 @@ public class TicketService {
 	}
 	
 
-	public ResponseEntity<ResponseStructure<List<Ticket>>> findAllTicket() {
+	public ResponseEntity<ResponseStructure<List<Ticket>>> findAllTicket(List<Ticket> ticket) {
 		ResponseStructure<List<Ticket>> structure=new ResponseStructure<List<Ticket>>();
 		structure.setMessage("find all Ticket success");
 		structure.setStatus(HttpStatus .FOUND.value());

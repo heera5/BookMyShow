@@ -23,7 +23,7 @@ public class Theatre {
 	private String theatreLocation;
 	private String theatrename;
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<Movie> listofmoive;
+	private List<Screen> listofscreen;
 	public int getTheatreId() {
 		return theatreId;
 	}
@@ -42,16 +42,16 @@ public class Theatre {
 	public void setTheatrename(String theatrename) {
 		this.theatrename = theatrename;
 	}
-	public List<Movie> getListofmoive() {
-		return listofmoive;
+	public List<Screen> getListofscreen() {
+		return listofscreen;
 	}
-	public void setListofmoive(List<Movie> listofmoive) {
-		this.listofmoive = listofmoive;
+	public void setListofscreen(List<Screen> listofscreen) {
+		this.listofscreen = listofscreen;
 	}
 	@Override
 	public String toString() {
 		return "Theatre [theatreId=" + theatreId + ", theatreLocation=" + theatreLocation + ", theatrename="
-				+ theatrename + ", listofmoive=" + listofmoive + "]";
+				+ theatrename + ", listofscreen=" + listofscreen + "]";
 	}
 	
 

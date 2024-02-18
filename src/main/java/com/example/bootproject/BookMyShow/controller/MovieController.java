@@ -55,12 +55,19 @@ public class MovieController {
 				
 
 			@GetMapping("found all")
-			public ResponseEntity<ResponseStructure<List<Movie>>>  findAllMovie(List<Movie> movie){
+			public ResponseEntity<ResponseStructure<List<Movie>>>  findAllMovie(@RequestBody List<Movie> movie){
 				System.out.println("found all laptop");
 				return movieservice.findAllMovie(movie);
 			}
 			
+			@PutMapping("assignreviewtomovie")
+			public ResponseEntity<ResponseStructure<MovieDto>>Assignreviewtomovie(@RequestParam int movieid,@RequestParam List<Integer> reviewid)
 
+			{
+				System.out.println("review assignted to movie");
+				return movieservice.Assignreviewtomovie(movieid, reviewid);
+			}
+				
 
 
 }

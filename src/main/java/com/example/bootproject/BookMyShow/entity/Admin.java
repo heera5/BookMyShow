@@ -38,6 +38,8 @@ public class Admin {
 	private String adminPassword;
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Theatre> listofTheatre;
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<TheatreAdmin> theatreadmin;
 	public int getAdminId() {
 		return adminId;
 	}
@@ -68,10 +70,17 @@ public class Admin {
 	public void setListofTheatre(List<Theatre> listofTheatre) {
 		this.listofTheatre = listofTheatre;
 	}
+	public List<TheatreAdmin> getTheatreadmin() {
+		return theatreadmin;
+	}
+	public void setTheatreadmin(List<TheatreAdmin> theatreadmin) {
+		this.theatreadmin = theatreadmin;
+	}
 	@Override
 	public String toString() {
 		return "Admin [adminId=" + adminId + ", adminmName=" + adminmName + ", adminMail=" + adminMail
-				+ ", adminPassword=" + adminPassword + "]";
+				+ ", adminPassword=" + adminPassword + ", listofTheatre=" + listofTheatre + ", theatreadmin="
+				+ theatreadmin + "]";
 	}
 	
 

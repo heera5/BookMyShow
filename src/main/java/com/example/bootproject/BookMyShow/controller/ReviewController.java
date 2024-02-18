@@ -1,5 +1,7 @@
 package com.example.bootproject.BookMyShow.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.bootproject.BookMyShow.entity.Admin;
 import com.example.bootproject.BookMyShow.entity.Review;
 import com.example.bootproject.BookMyShow.service.ReviewService;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
@@ -51,5 +54,10 @@ public class ReviewController {
 			return reviewservice.updateReview(review, reviewid);
 		}
 		
+		@GetMapping("found all")
+		public ResponseEntity<ResponseStructure<List<Review>>>  findAllReview(@RequestBody List<Review> review){
+			System.out.println("found all laptop");
+			return reviewservice.findAllReview(review);
+		}
 
 }

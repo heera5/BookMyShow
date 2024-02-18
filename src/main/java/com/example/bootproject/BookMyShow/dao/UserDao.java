@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.bootproject.BookMyShow.entity.User;
+import com.example.bootproject.BookMyShow.entity.User;
 import com.example.bootproject.BookMyShow.repo.UserRepo;
 
 @Repository
@@ -54,6 +55,16 @@ public class UserDao {
 			
 			List<User> exuser =userrepo.findAll();
 			return exuser;
+		}
+		
+		public User findbyMail(String useremail) 
+		{
+			User user=findbyMail(useremail);
+			if(user!=null)
+			{
+				return user;
+			}
+			return null;
 		}
 
 

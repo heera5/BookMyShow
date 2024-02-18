@@ -50,7 +50,15 @@ public class TheatreAdminController {
 				System.out.println("updated");
 				return theatreadminservice.updateTheatreAdmin(theatreadmin, theatreadminid);
 			}
+			@PutMapping("assigntota")	
+			public ResponseEntity<ResponseStructure<TheatreAdminDto>> assignTheatreToTheatreAdmin(int theatreAdminId,int theatreId){
+				System.out.println("assigned theatre to theatreadmin");
+				return theatreadminservice.assignTheatreToTheatreAdmin(theatreAdminId, theatreId);
 				
-
-
+			}
+			@GetMapping("talogin")
+			public ResponseEntity<ResponseStructure<TheatreAdmin>>theatreadminlogin(@RequestParam String theatreadminemail,@RequestParam String theatreadminpassword){
+				System.out.println("ta login successful");
+				return theatreadminservice.theatreadminlogin(theatreadminemail, theatreadminpassword);
+			}
 }

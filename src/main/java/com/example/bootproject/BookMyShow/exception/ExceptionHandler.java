@@ -119,4 +119,14 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 		 structure.setStatus(HttpStatus.NOT_FOUND.value());
 		 return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
 	}
+	
+	@org.springframework.web.bind.annotation.ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> NoPaymentReceivedException(NoPaymentReceived ex)
+	{
+		 ResponseStructure<String> structure=new ResponseStructure<String>();
+		 structure.setData(ex.getMessage());
+		 structure.setMessage("no payment received!!!!!!!!!");
+		 structure.setStatus(HttpStatus.NOT_FOUND.value());
+		 return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
 }

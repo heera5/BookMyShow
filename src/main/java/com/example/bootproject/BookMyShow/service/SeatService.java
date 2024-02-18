@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.bootproject.BookMyShow.dao.SeatDao;
+import com.example.bootproject.BookMyShow.entity.Payment;
 import com.example.bootproject.BookMyShow.entity.Seat;
 import com.example.bootproject.BookMyShow.exception.SeatNotFound;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
@@ -56,9 +57,9 @@ public class SeatService {
 		}
 		throw new SeatNotFound("seat not updated because,seat not found for the given id");
 	}
-	public ResponseEntity<ResponseStructure<List<Seat>>> findAllSeat() {
+	public ResponseEntity<ResponseStructure<List<Seat>>> findAllSeat(List<Seat> seat) {
 		ResponseStructure<List<Seat>> structure=new ResponseStructure<List<Seat>>();
-		List<Seat> seatList=seatdao.findAllSeat();
+		List<Seat> seatList=seatdao.findAllSeat(seat);
 		structure.setMessage(" find all seat success");
 		structure.setStatus(HttpStatus .FOUND.value());
 		structure.setData(seatList);

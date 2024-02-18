@@ -19,7 +19,7 @@ public class Movie {
 	private int movieId;
 	private String movieName;
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<Seat> seat;
+	private List<Review> review;
 	private int rating;
 	public int getMovieId() {
 		return movieId;
@@ -33,11 +33,11 @@ public class Movie {
 	public void setMovieName(String movieName) {
 		this.movieName = movieName;
 	}
-	public List<Seat> getSeat() {
-		return seat;
+	public List<Review> getReview() {
+		return review;
 	}
-	public void setSeat(List<Seat> seat) {
-		this.seat = seat;
+	public void setReview(List<Review> review) {
+		this.review = review;
 	}
 	public int getRating() {
 		return rating;
@@ -47,7 +47,8 @@ public class Movie {
 	}
 	@Override
 	public String toString() {
-		return "Movie [movieId=" + movieId + ", movieName=" + movieName + ", seat=" + seat + ", rating=" + rating + "]";
+		return "Movie [movieId=" + movieId + ", movieName=" + movieName + ", review=" + review + ", rating=" + rating
+				+ "]";
 	}
 	
 	
