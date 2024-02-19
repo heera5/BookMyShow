@@ -27,11 +27,16 @@ public class TheatreAdmin {
 	@NotBlank(message="admin email cannot be blank")
 	@Email(message="enter a valid email address")
 	private String theatreAdminEmail;
-	@NotNull(message="password cannot be null")
-	@NotBlank(message="password cannot be null")
-	@Size(min=8,message="password must be atleast 8 characters")
-	@Pattern(regexp = "^(?=.[a-z])(?=.[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$",
-	         message="password must be atleast 1 digit,1 uppercase,1 lowercase and 1 special character")
+//	@NotNull(message="password cannot be null")
+//	@NotBlank(message="password cannot be null")
+//	@Size(min=8,message="password must be atleast 8 characters")
+//	@Pattern(regexp = "^(?=.[a-z])(?=.[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$",
+//	         message="password must be atleast 1 digit,1 uppercase,1 lowercase and 1 special character")
+	
+	@Pattern(
+	        regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$",
+	        message = "Password must be at least 8 characters long and include at least 1 digit, 1 lowercase letter, 1 uppercase letter, and 1 special character."
+	    )
 	private String theatreAdminPassword;
 	@OneToOne(cascade=CascadeType.ALL)
 	private Theatre theatre;

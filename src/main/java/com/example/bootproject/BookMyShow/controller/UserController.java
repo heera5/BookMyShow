@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,8 @@ import com.example.bootproject.BookMyShow.entity.User;
 import com.example.bootproject.BookMyShow.service.UserService;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("user")
@@ -27,7 +30,7 @@ public class UserController {
 			UserService userservice;
 			
 			@PostMapping("save")
-			public ResponseEntity<ResponseStructure<UserDto>> saveUser(@RequestBody User user)
+			public ResponseEntity<ResponseStructure<UserDto>> saveUser(@Valid @RequestBody User user,BindingResult Result)
 			{
 				System.out.println("saved");
 			 return userservice.saveUser(user);
@@ -66,4 +69,11 @@ public class UserController {
 				System.out.println("login successful");
 				return userservice.userLogin(useremail, userPassword);
 			}
-}
+			
+			@GetMapping("assign")
+			public ResponseEntity<ResponseStructure<User>> assignTicketToUser(int ticketId,int userId){
+				System.out.println("assigning ticket to user done!!!!!!!!!!!");
+				return userservice.assignTicketToUser(ticketId, userId);
+			}
+				
+			}

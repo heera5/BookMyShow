@@ -1,5 +1,6 @@
 package com.example.bootproject.BookMyShow.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.bootproject.BookMyShow.dao.ScreenDao;
 import com.example.bootproject.BookMyShow.dao.TheatreDao;
 import com.example.bootproject.BookMyShow.entity.Screen;
 import com.example.bootproject.BookMyShow.entity.Theatre;
@@ -24,6 +26,8 @@ public class TheatreService {
 	@Autowired
 	TheatreDao theatredao;
 	
+	@Autowired
+	ScreenDao screendao;
 	@Autowired
 	TheatreRepo theatrerepo;
 	@Autowired
@@ -80,7 +84,7 @@ public class TheatreService {
 		
 		public ResponseEntity<ResponseStructure<List<Theatre>>>  findAllTheatre(List<Theatre> theatrel){
 			ResponseStructure <List<Theatre>>structure=new ResponseStructure<List<Theatre>>();
-			List<Theatre> l=theatredao.findAllTheatre(theatrel);
+			List<Theatre> l=theatredao.findAllTheatre();
 			if(l!=null) {
 				structure.setMessage("list of data ");
 				structure.setStatus(HttpStatus.FOUND.value());
@@ -90,23 +94,61 @@ public class TheatreService {
 			throw new NoListFound("no list found!!!!!!");
 			}
 		
-		public ResponseEntity<ResponseStructure<List<Theatre>>> assignscreentotheatre(int theatreid,List<Integer>screenid){
-			ResponseStructure<Theatre>structure=new ResponseStructure<Theatre>();
+//		public ResponseEntity<ResponseStructure<List<Theatre>>> assignscreentotheatre(int theatreid,List<Integer>screenid){
+//			ResponseStructure<Theatre>structure=new ResponseStructure<Theatre>();
+//			ModelMapper mapper=new ModelMapper();
+//			Theatre theatre=theatredao.findTheatre(theatreid);
+//			if(theatre!=null) {
+//				List<Screen>s=screenrepo.findAllById(screenid);
+//				theatre.setListofscreen(s);
+//				theatredao.updateTheatre(theatre, theatreid);
+//				structure.setMessage("screen assigned to theatres");
+//				structure.setStatus(theatreid);
+//				structure.setData(theatre);
+//				return new ResponseEntity<ResponseStructure<List<Theatre>>>(HttpStatus.OK);
+//				
+//				
+//				
+//			}
+//			return null;
+//		}
+		public ResponseEntity<ResponseStructure<Theatre>> addScreenToTheatre(int screenId,int theatreId)
+		{
+			Theatre theatre1=new Theatre();
 			ModelMapper mapper=new ModelMapper();
-			Theatre theatre=theatredao.findTheatre(theatreid);
-			if(theatre!=null) {
-				List<Screen>s=screenrepo.findAllById(screenid);
-				theatre.setListofscreen(s);
-				theatredao.updateTheatre(theatre, theatreid);
-				structure.setMessage("screen assigned to theatres");
-				structure.setStatus(theatreid);
-				structure.setData(theatre);
-				return new ResponseEntity<ResponseStructure<List<Theatre>>>(HttpStatus.OK);
-				
-				
-				
+		
+			Theatre theatre = theatredao.findTheatre(theatreId);
+			if(theatre!=null)
+			{
+				    List<Screen> screenList = screendao.findAllScreen(null);
+				    List<Screen> theatreScreenList = theatre.getListofscreen();
+				    if(theatreScreenList == null)
+				    {
+				    	List<Screen> newScreenList=new ArrayList<Screen>();
+				    	newScreenList.add(screendao.findScreen(theatreId));
+				    	theatre.setListofscreen(screenList);	
+				    }
+				    else 
+				    {
+				    	for (Screen screen : screenList) 
+				    	{
+				    		if(screen.getScreenId()== screenId)
+				    		{
+				    			theatreScreenList.add(screendao.findScreen(screenId));
+				    			theatre.setListofscreen(screenList);
+				    		}
+							
+						}
+				    }
+				    
+				    mapper.map(theatredao.updateTheatre(theatre,theatre.getTheatreId()), theatre);
+				    ResponseStructure<Theatre> structure=new ResponseStructure<Theatre>();
+				    structure.setMessage("Screen list assign to Theatre");
+				    structure.setStatus(HttpStatus.OK.value());
+				    structure.setData(theatre);
+				    
+				    return new ResponseEntity<ResponseStructure<Theatre>>(structure,HttpStatus.OK);
 			}
-			return null;
-		}
-	
+			throw new TheatreUnreachable("Theatre object is not found for the given ");
+	}
 }

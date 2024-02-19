@@ -54,6 +54,7 @@ public class Theatre {
 				+ theatrename + ", listofscreen=" + listofscreen + "]";
 	}
 	
+	
 
 	
 

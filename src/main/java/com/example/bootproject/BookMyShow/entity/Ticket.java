@@ -87,12 +87,18 @@ public class Ticket {
 	public void setTicketSeats(List<Seat> ticketSeats) {
 		this.ticketSeats = ticketSeats;
 	}
+	public Payment getPayment() {
+		return payment;
+	}
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
 	@Override
 	public String toString() {
 		return "Ticket [ticketId=" + ticketId + ", movieId=" + movieId + ", movieName=" + movieName
 				+ ", movieStartTime=" + movieStartTime + ", moviesEndTime=" + moviesEndTime + ", movieLanguage="
 				+ movieLanguage + ", bookingDate=" + bookingDate + ", totalTicketPrice=" + totalTicketPrice
-				+ ", ticketSeats=" + ticketSeats + "]";
+				+ ", ticketSeats=" + ticketSeats + ", payment=" + payment + "]";
 	}
 	
 

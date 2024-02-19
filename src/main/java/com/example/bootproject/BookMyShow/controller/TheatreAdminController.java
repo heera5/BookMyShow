@@ -2,6 +2,7 @@ package com.example.bootproject.BookMyShow.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,8 @@ import com.example.bootproject.BookMyShow.entity.TheatreAdmin;
 import com.example.bootproject.BookMyShow.service.TheatreAdminService;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("theatreadmin")
@@ -26,7 +29,7 @@ public class TheatreAdminController {
 			TheatreAdminService theatreadminservice;
 			
 			@PostMapping("save")
-			public ResponseEntity<ResponseStructure<TheatreAdminDto>> saveTheatreAdmin(@RequestBody TheatreAdmin theatreadmin)
+			public ResponseEntity<ResponseStructure<TheatreAdminDto>> saveTheatreAdmin(@Valid @RequestBody TheatreAdmin theatreadmin,BindingResult Result)
 			{
 				System.out.println("saved");
 			 return theatreadminservice.saveTheatreAdmin(theatreadmin);
@@ -50,7 +53,7 @@ public class TheatreAdminController {
 				System.out.println("updated");
 				return theatreadminservice.updateTheatreAdmin(theatreadmin, theatreadminid);
 			}
-			@PutMapping("assigntota")	
+			@GetMapping("assigntota")	
 			public ResponseEntity<ResponseStructure<TheatreAdminDto>> assignTheatreToTheatreAdmin(int theatreAdminId,int theatreId){
 				System.out.println("assigned theatre to theatreadmin");
 				return theatreadminservice.assignTheatreToTheatreAdmin(theatreAdminId, theatreId);

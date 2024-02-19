@@ -89,7 +89,7 @@ public class TheatreAdminService {
 			}
 			throw new TheatreAdminNotFound("theatreadmin is not there!!!!!!!!");
 			}
-	public ResponseEntity<ResponseStructure<List<TheatreAdmin>>>  findAllStudent(List<TheatreAdmin> admin){
+	public ResponseEntity<ResponseStructure<List<TheatreAdmin>>>  findAllTheatreAdmin(List<TheatreAdmin> admin){
 		
 		ResponseStructure <List<TheatreAdmin>>structure=new ResponseStructure<List<TheatreAdmin>>();
 		TheatreAdminDto dto=new TheatreAdminDto();

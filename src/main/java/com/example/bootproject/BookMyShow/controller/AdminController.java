@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,11 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.bootproject.BookMyShow.dto.AdminDto;
 import com.example.bootproject.BookMyShow.entity.Admin;
 import com.example.bootproject.BookMyShow.service.AdminService;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
+
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -26,8 +30,8 @@ public class AdminController {
 		@Autowired
 		AdminService adminservice;
 		
-		@PostMapping("save")
-		public ResponseEntity<ResponseStructure<AdminDto>> saveAdmin(@RequestBody Admin admin)
+		@PostMapping
+		public ResponseEntity<ResponseStructure<AdminDto>> saveAdmin(@Valid @RequestBody Admin admin,BindingResult Result)
 		{
 			System.out.println("saved");
 		 return adminservice.save(admin);
@@ -58,7 +62,7 @@ public class AdminController {
 			System.out.println("found all laptop");
 			return adminservice.findAllAdmin(admin);
 		}
-		
+	
 		@GetMapping("adminlogin")
 		public ResponseEntity<ResponseStructure<AdminDto>>adminlogin(@RequestParam String adminemail,@RequestParam String admilpassword)
 		{
@@ -67,17 +71,18 @@ public class AdminController {
 		
 		}
 		
-		@PutMapping("assgintheatretoadmin")
-		public ResponseEntity<ResponseStructure<AdminDto>> assignTheatresToAdmin(@RequestParam String adminEmail,@RequestParam String adminPassword,@RequestParam int adminId,List<Integer> theatreIds){
+		@PutMapping("addtheatretoadmin")
+		public ResponseEntity<ResponseStructure<AdminDto>> addTheatreToAdmin(int adminId,int theatreId){
+
 			System.out.println("Assigning theatre to admin successful");
-			return adminservice.assignTheatresToAdmin(adminEmail, adminPassword, adminId, theatreIds);
+			return adminservice.addTheatreToAdmin(adminId, theatreId);
 		}
 			
 			
-		@PutMapping("assgintheatreadmintoadmin")
-		public ResponseEntity<ResponseStructure<AdminDto>> assignTheatreAdminToAdmin(@RequestParam String adminEmail,@RequestParam String adminPassword,@RequestParam int theatreadminId,List<Integer> theatreadminId1){
-			System.out.println("Assigning theatre to admin successful");
-			return adminservice.assignTheatreAdminToAdmin(adminEmail, adminPassword, theatreadminId, theatreadminId1);
+		@PutMapping("addtheatreadmintoadmin")
+		public ResponseEntity<ResponseStructure<AdminDto>> addTheatreAdminToAdmin(int adminId,int theatreadminId){
+			System.out.println("Assigning theatreadmin to admin successful");
+			return adminservice.addTheatreAdminToAdmin(adminId, theatreadminId);
 		}
 			
 }

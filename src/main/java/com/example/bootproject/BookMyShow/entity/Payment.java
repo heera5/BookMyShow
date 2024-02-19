@@ -14,23 +14,40 @@ public class Payment {
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int paymentId;
-	private double paymentPrice;
+	private String paymentMadeBy;
+	private String paymentMode;
+	private long PaymentContact;
 	public int getPaymentId() {
 		return paymentId;
 	}
 	public void setPaymentId(int paymentId) {
 		this.paymentId = paymentId;
 	}
-	public double getPaymentPrice() {
-		return paymentPrice;
+	public String getPaymentMadeBy() {
+		return paymentMadeBy;
 	}
-	public void setPaymentPrice(double paymentPrice) {
-		this.paymentPrice = paymentPrice;
+	public void setPaymentMadeBy(String paymentMadeBy) {
+		this.paymentMadeBy = paymentMadeBy;
+	}
+	public String getPaymentMode() {
+		return paymentMode;
+	}
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
+	}
+	public long getPaymentContact() {
+		return PaymentContact;
+	}
+	public void setPaymentContact(long paymentContact) {
+		PaymentContact = paymentContact;
 	}
 	@Override
 	public String toString() {
-		return "Payment [paymentId=" + paymentId + ", paymentPrice=" + paymentPrice + "]";
+		return "Payment [paymentId=" + paymentId + ", paymentMadeBy=" + paymentMadeBy + ", paymentMode=" + paymentMode
+				+ ", PaymentContact=" + PaymentContact + "]";
 	}
+	
+	
 	
 
 }

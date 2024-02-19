@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,8 @@ import com.example.bootproject.BookMyShow.entity.Movie;
 import com.example.bootproject.BookMyShow.service.MovieService;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("movie")
@@ -28,7 +31,7 @@ public class MovieController {
 			MovieService movieservice;
 			
 			@PostMapping("save")
-			public ResponseEntity<ResponseStructure<MovieDto>> saveMovie(@RequestBody Movie movie)
+			public ResponseEntity<ResponseStructure<MovieDto>> saveMovie(@Valid @RequestBody Movie movie,BindingResult Result)
 			{
 				System.out.println("saved");
 			 return movieservice.saveMovie(movie);
@@ -60,12 +63,12 @@ public class MovieController {
 				return movieservice.findAllMovie(movie);
 			}
 			
-			@PutMapping("assignreviewtomovie")
-			public ResponseEntity<ResponseStructure<MovieDto>>Assignreviewtomovie(@RequestParam int movieid,@RequestParam List<Integer> reviewid)
+			@PutMapping("addreviewtomovie")
+			public ResponseEntity<ResponseStructure<MovieDto>> addReviewToMovie(@RequestParam int movieId,@RequestParam int reviewId)
 
 			{
 				System.out.println("review assignted to movie");
-				return movieservice.Assignreviewtomovie(movieid, reviewid);
+				return movieservice.addReviewToMovie(movieId, reviewId);
 			}
 				
 

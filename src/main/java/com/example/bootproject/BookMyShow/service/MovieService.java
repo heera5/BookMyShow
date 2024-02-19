@@ -1,5 +1,6 @@
 package com.example.bootproject.BookMyShow.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.bootproject.BookMyShow.dao.MovieDao;
+import com.example.bootproject.BookMyShow.dao.ReviewDao;
 import com.example.bootproject.BookMyShow.dto.MovieDto;
 import com.example.bootproject.BookMyShow.entity.Movie;
 import com.example.bootproject.BookMyShow.entity.Review;
@@ -24,7 +26,8 @@ public class MovieService {
 
 	@Autowired
 	MovieDao moviedao;
-	
+	@Autowired
+	ReviewDao reviewdao;
 	@Autowired
 	ReviewRepo reviewrepo;
 	
@@ -103,22 +106,62 @@ public class MovieService {
 		throw new NoListFound("no list found");
 		}
 	
-	public ResponseEntity<ResponseStructure<MovieDto>>Assignreviewtomovie(int movieid,List<Integer> reviewid){
-		MovieDto mdto=new MovieDto();
-		ModelMapper m=new ModelMapper();
-		Movie m1=moviedao.findMovie(movieid);
-		if(m1!=null) {
-			List<Review>exreview=reviewrepo.findAllById(reviewid);
-			m1.setReview(exreview);
-			m.map(moviedao.updateMovie(m1, movieid), moviedao);
-			ResponseStructure<MovieDto> structure=new ResponseStructure<MovieDto>();
-			structure.setMessage("assign theatreAdmin to admin succesffuly");
-			structure.setStatus(HttpStatus .OK.value());
-			structure.setData(mdto);
-			return new ResponseEntity<ResponseStructure<MovieDto>>(structure,HttpStatus.OK);
+//	public ResponseEntity<ResponseStructure<MovieDto>>Assignreviewtomovie(int movieid,List<Integer> reviewid){
+//		MovieDto mdto=new MovieDto();
+//		ModelMapper m=new ModelMapper();
+//		Movie m1=moviedao.findMovie(movieid);
+//		if(m1!=null) {
+//			List<Review>exreview=reviewrepo.findAllById(reviewid);
+//			m1.setReview(exreview);
+//			m.map(moviedao.updateMovie(m1, movieid), moviedao);
+//			ResponseStructure<MovieDto> structure=new ResponseStructure<MovieDto>();
+//			structure.setMessage("assign theatreAdmin to admin succesffuly");
+//			structure.setStatus(HttpStatus .OK.value());
+//			structure.setData(mdto);
+//			return new ResponseEntity<ResponseStructure<MovieDto>>(structure,HttpStatus.OK);
+//		}
+//		throw new ReviewNotFound("we can't assign review to movie");
+//	}
+	
+	public ResponseEntity<ResponseStructure<MovieDto>> addReviewToMovie(int movieId,int reviewId)
+	{
+		MovieDto movieDto=new MovieDto();
+		ModelMapper mapper=new ModelMapper();
+	
+		Movie movie = moviedao.findMovie(movieId);
+		if(movie!=null)
+		{
+			    List<Review> reviewList = reviewdao.findAllReview(null);
+			    List<Review> movieReview = movie.getReview();
+			    if(movieReview==null)
+			    {
+			    	List<Review> newReviewList=new ArrayList<Review>();
+			    	newReviewList.add(reviewdao.findReview(reviewId));
+			    	movie.setReview(newReviewList);	
+			    }
+			    else 
+			    {
+			    	for (Review review : reviewList) 
+			    	{
+			    		if(review.getReviewId()==reviewId)
+			    		{
+			    			movieReview.add(reviewdao.findReview(reviewId));
+			    			movie.setReview(movieReview);;
+			    		}
+						
+					}
+			    }
+			    
+			    mapper.map(moviedao.updateMovie(movie,movie.getMovieId()), movieDto);
+			    ResponseStructure<MovieDto> structure=new ResponseStructure<MovieDto>();
+			    structure.setMessage("Review list assign to Movie");
+			    structure.setStatus(HttpStatus.OK.value());
+			    structure.setData(movieDto);
+			    
+			    return new ResponseEntity<ResponseStructure<MovieDto>>(structure,HttpStatus.OK);
 		}
-		throw new ReviewNotFound("we can't assign review to movie");
-	}
+		throw new ReviewNotFound("Review object is not found for the given ");
+}
 	
 	
 }

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.example.bootproject.BookMyShow.dao.PaymentDao;
 import com.example.bootproject.BookMyShow.entity.Payment;
 import com.example.bootproject.BookMyShow.entity.Review;
+import com.example.bootproject.BookMyShow.entity.Ticket;
 import com.example.bootproject.BookMyShow.exception.NoPaymentReceived;
+import com.example.bootproject.BookMyShow.exception.TicketNotFound;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
 @Service
 public class PaymentService {
@@ -65,6 +67,9 @@ public class PaymentService {
 		structure.setData(paymentList);
 		return new ResponseEntity<ResponseStructure<List<Payment>>>(structure,HttpStatus.FOUND);
 	}
+	
+
+	
 
 
 }

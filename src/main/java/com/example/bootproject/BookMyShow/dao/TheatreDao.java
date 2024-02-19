@@ -51,12 +51,13 @@ public class TheatreDao {
 						return null;
 					}
 					
-					public List<Theatre> findAllTheatre(List<Theatre> theatre)
+					public List<Theatre> findAllTheatre()
 					{
 						
-						List<Theatre> extheatre =theatrerepo.findAll();
-						return extheatre;
+						return theatrerepo.findAll();
 					}
+
+				
 
 
 }

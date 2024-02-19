@@ -34,11 +34,15 @@ public class User {
 	@Email(message="enter a valid email address")
 	
 	private String userMail;
-	@NotNull(message="password cannot be null")
-	@NotBlank(message="password cannot be null")
-	@Size(min=8,message="password must be atleast 8 characters")
-	@Pattern(regexp = "^(?=.[a-z])(?=.[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$",
-	         message="password must be atleast 1 digit,1 uppercase,1 lowercase and 1 special character")
+//	@NotNull(message="password cannot be null")
+//	@NotBlank(message="password cannot be null")
+//	@Size(min=8,message="password must be atleast 8 characters")
+//	@Pattern(regexp = "^(?=.[a-z])(?=.[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$",
+//	         message="password must be atleast 1 digit,1 uppercase,1 lowercase and 1 special character")
+	@Pattern(
+	        regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$",
+	        message = "Password must be at least 8 characters long and include at least 1 digit, 1 lowercase letter, 1 uppercase letter, and 1 special character."
+	    )
 	private String userPassword;
 	@OneToOne(cascade=CascadeType.ALL)
 	private Ticket ticket;
@@ -66,11 +70,19 @@ public class User {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
+	public Ticket getTicket() {
+		return ticket;
+	}
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
+	}
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", userMail=" + userMail + ", userPassword="
 				+ userPassword + ", ticket=" + ticket + "]";
-	}
+	} 
+	
+	
 	
 	
 

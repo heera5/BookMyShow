@@ -1,5 +1,6 @@
 package com.example.bootproject.BookMyShow.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.bootproject.BookMyShow.dao.AdminDao;
+import com.example.bootproject.BookMyShow.dao.TheatreAdminDao;
+import com.example.bootproject.BookMyShow.dao.TheatreDao;
 import com.example.bootproject.BookMyShow.dto.AdminDto;
 import com.example.bootproject.BookMyShow.entity.Admin;
 import com.example.bootproject.BookMyShow.entity.Theatre;
@@ -38,6 +41,11 @@ public class AdminService {
 		
 		@Autowired
 		TheatreAdmin theatreadmin;
+		
+		@Autowired
+		TheatreAdminDao theatreadmindao;
+		@Autowired
+		TheatreDao theatredao;
 		
 		public ResponseEntity<ResponseStructure<AdminDto>> save(Admin admin){
 			
@@ -139,47 +147,129 @@ public class AdminService {
 			throw new AdminNotFound("admin object not found for the given mail id");
 		}
 		
-		public ResponseEntity<ResponseStructure<AdminDto>> assignTheatresToAdmin(String adminEmail,String adminPassword,int adminId,List<Integer> theatreIds){
-			ResponseEntity<ResponseStructure<AdminDto>> ladmin=adminLogin(adminEmail, adminPassword);
-			if(ladmin !=null) {
-			AdminDto aDto=new AdminDto();
-			ModelMapper mapper=new ModelMapper();
-			Admin admin=admindao.findAdmin(adminId);
-			if(admin != null) {
-				List<Theatre> extheatres=theatrerepo.findAllById(theatreIds);
-				admin.setListofTheatre(extheatres);
-				mapper.map(admindao.updateAdmin(admin, adminId), aDto);
-				ResponseStructure<AdminDto> structure=new ResponseStructure<AdminDto>();
-				structure.setMessage("assign theatre to Admin success");
-				structure.setStatus(HttpStatus .OK.value());
-				structure.setData(aDto);
-				return new ResponseEntity<ResponseStructure<AdminDto>>(structure,HttpStatus.OK);
-			}
-			throw new AdminNotFound("assign theatre to  admin");
-			}
-			throw new AdminNotFound("admin login required");
-		}
+//		public ResponseEntity<ResponseStructure<AdminDto>> assignTheatresToAdmin(String adminEmail,String adminPassword,int adminId,List<Integer> theatreIds){
+//			ResponseEntity<ResponseStructure<AdminDto>> ladmin=adminLogin(adminEmail, adminPassword);
+//			if(ladmin !=null) {
+//			AdminDto aDto=new AdminDto();
+//			ModelMapper mapper=new ModelMapper();
+//			Admin admin=admindao.findAdmin(adminId);
+//			if(admin != null) {
+//				List<Theatre> extheatres=theatrerepo.findAllById(theatreIds);
+//				admin.setListofTheatre(extheatres);
+//				mapper.map(admindao.updateAdmin(admin, adminId), aDto);
+//				ResponseStructure<AdminDto> structure=new ResponseStructure<AdminDto>();
+//				structure.setMessage("assign theatre to Admin success");
+//				structure.setStatus(HttpStatus .OK.value());
+//				structure.setData(aDto);
+//				return new ResponseEntity<ResponseStructure<AdminDto>>(structure,HttpStatus.OK);
+//			}
+//			throw new AdminNotFound("assign theatre to  admin");
+//			}
+//			throw new AdminNotFound("admin login required");
+//		}
 		
-		public ResponseEntity<ResponseStructure<AdminDto>> assignTheatreAdminToAdmin(String adminEmail,String adminPassword,int theatreadminId,List<Integer> theatreadminId1){
-			ResponseEntity<ResponseStructure<AdminDto>> ladmin=adminLogin(adminEmail, adminPassword);
-			if(ladmin !=null) {
-			AdminDto aDto=new AdminDto();
+//		public ResponseEntity<ResponseStructure<AdminDto>> assignTheatreAdminToAdmin(String adminEmail,String adminPassword,int theatreadminId,List<Integer> theatreadminId1){
+//			ResponseEntity<ResponseStructure<AdminDto>> ladmin=adminLogin(adminEmail, adminPassword);
+//			if(ladmin !=null) {
+//			AdminDto aDto=new AdminDto();
+//			ModelMapper mapper=new ModelMapper();
+//			Admin admin=admindao.findAdmin(theatreadminId);
+//			if(admin != null) {
+//				List<TheatreAdmin> extheatreadmin=theatreadminrepo.findAllById(theatreadminId1);
+//				admin.setTheatreadmin(extheatreadmin);
+//				mapper.map(admindao.updateAdmin(admin, theatreadminId), aDto);
+//				ResponseStructure<AdminDto> structure=new ResponseStructure<AdminDto>();
+//				structure.setMessage("assign theatre to Admin success");
+//				structure.setStatus(HttpStatus .OK.value());
+//				structure.setData(aDto);
+//				return new ResponseEntity<ResponseStructure<AdminDto>>(structure,HttpStatus.OK);
+//			}
+//			throw new AdminNotFound("assigning theatreadmin to admin done!!!!!");
+//			}
+//			throw new AdminNotFound("admin login required");
+//		}
+		
+		public ResponseEntity<ResponseStructure<AdminDto>> addTheatreToAdmin(int adminId,int theatreId){
+			
+			AdminDto adminDto=new AdminDto();
 			ModelMapper mapper=new ModelMapper();
-			Admin admin=admindao.findAdmin(theatreadminId);
-			if(admin != null) {
-				List<TheatreAdmin> extheatreadmin=theatreadminrepo.findAllById(theatreadminId1);
-				admin.setTheatreadmin(extheatreadmin);
-				mapper.map(admindao.updateAdmin(admin, theatreadminId), aDto);
-				ResponseStructure<AdminDto> structure=new ResponseStructure<AdminDto>();
-				structure.setMessage("assign theatre to Admin success");
-				structure.setStatus(HttpStatus .OK.value());
-				structure.setData(aDto);
-				return new ResponseEntity<ResponseStructure<AdminDto>>(structure,HttpStatus.OK);
+		
+			
+			Admin a=admindao.findAdmin(adminId);
+			if(a!=null)
+			{
+				    List<Theatre> theatreList=theatredao.findAllTheatre();
+				    List<Theatre>adminTheatre=a.getListofTheatre();
+				    if(adminTheatre==null)
+				    {
+				    	List<Theatre> newTheatreList=new ArrayList<Theatre>();
+				    	newTheatreList.add(theatredao.findTheatre(theatreId));
+				    	a.setListofTheatre(newTheatreList);	
+				    }
+				    else 
+				    {
+				    	for (Theatre theatre : theatreList) 
+				    	{
+				    		if(theatre.getTheatreId()==theatreId)
+				    		{
+				    			adminTheatre.add(theatredao.findTheatre(theatreId));
+				    			a.setListofTheatre(adminTheatre);;
+				    		}
+							
+						}
+				    }
+				    mapper.map(admindao.updateAdmin(a,a.getAdminId()), adminDto);
+				    ResponseStructure<AdminDto> structure=new ResponseStructure<AdminDto>();
+				    structure.setMessage("Theatre list assign to admin");
+				    structure.setStatus(HttpStatus.OK.value());
+				    structure.setData(adminDto);
+				    
+	       return new ResponseEntity<ResponseStructure<AdminDto>>(structure,HttpStatus.OK);
 			}
-			throw new AdminNotFound("assigning theatreadmin to admin done!!!!!");
+			throw new AdminNotFound("Admin object is not found for the given ");
+	}
+		
+public ResponseEntity<ResponseStructure<AdminDto>> addTheatreAdminToAdmin(int adminId,int theatreadminId){
+			
+			AdminDto adminDto=new AdminDto();
+			ModelMapper mapper=new ModelMapper();
+		
+			
+			Admin a=admindao.findAdmin(adminId);
+			if(a!=null)
+			{
+				    List<TheatreAdmin> theatreadminList=theatreadmindao.findAllTheatreAdmin(null);
+				    List<TheatreAdmin>Theatreadmin=a.getTheatreadmin();
+				    if(Theatreadmin==null)
+				    {
+				    	List<TheatreAdmin> newTheatreAdminList=new ArrayList<TheatreAdmin>();
+				    	newTheatreAdminList.add(theatreadmindao.findTheatreAdmin(theatreadminId));
+				    	a.setTheatreadmin(newTheatreAdminList);	
+				    }
+				    else 
+				    {
+				    	for (TheatreAdmin theatreadmin : theatreadminList) 
+				    	{
+				    		if(theatreadmin.getTheatreAdminId()==theatreadminId)
+				    		{
+				    			Theatreadmin.add(theatreadmindao.findTheatreAdmin(theatreadminId));
+				    			a.setTheatreadmin(Theatreadmin);;
+				    		}
+							
+						}
+				    }
+				    mapper.map(admindao.updateAdmin(a,a.getAdminId()), adminDto);
+				    ResponseStructure<AdminDto> structure=new ResponseStructure<AdminDto>();
+				    structure.setMessage("Theatreadmin list assign to admin");
+				    structure.setStatus(HttpStatus.OK.value());
+				    structure.setData(adminDto);
+				    
+	       return new ResponseEntity<ResponseStructure<AdminDto>>(structure,HttpStatus.OK);
 			}
-			throw new AdminNotFound("admin login required");
-		}
+			throw new AdminNotFound("Admin object is not found for the given ");
+	}
+		
+		
 		
 
 }

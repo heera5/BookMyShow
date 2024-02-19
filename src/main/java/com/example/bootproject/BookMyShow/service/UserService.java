@@ -8,14 +8,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.bootproject.BookMyShow.dao.TicketDao;
 import com.example.bootproject.BookMyShow.dao.UserDao;
 import com.example.bootproject.BookMyShow.dto.UserDto;
-
+import com.example.bootproject.BookMyShow.entity.Ticket;
 import com.example.bootproject.BookMyShow.entity.User;
 
 import com.example.bootproject.BookMyShow.exception.UserNotFound;
 import com.example.bootproject.BookMyShow.exception.NoListFound;
-
+import com.example.bootproject.BookMyShow.exception.TicketNotFound;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
 @Service
 public class UserService {
@@ -23,7 +24,8 @@ public class UserService {
 	@Autowired
 	UserDao userdao;
 	
-	
+	@Autowired
+	TicketDao ticketdao;
 	
 	public ResponseEntity<ResponseStructure<UserDto>> saveUser(User user){
 		
@@ -123,5 +125,30 @@ public class UserService {
 			
 		}
 		throw new UserNotFound("user object not found for the given mail id");
+	}
+	
+public ResponseEntity<ResponseStructure<User>> assignTicketToUser(int ticketId,int userId){
+		
+	    Ticket ticket = ticketdao.findTicket(ticketId);
+		User user = userdao.findUser(userId);
+		
+		if(user != null) 
+		{
+			if(ticket != null) 
+			{
+				user.setTicket(ticket);
+				ResponseStructure<User> structure=new ResponseStructure<User>();
+				structure.setMessage("assign Ticket to User success");
+				structure.setStatus(HttpStatus .OK.value());
+				structure.setData(user);
+				return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.OK);
+			}
+			else 
+			{
+				throw new TicketNotFound("ticket not assigned to the user because, ticket not found for the given id");
+			}
+			
+		}
+		throw new UserNotFound("we can't assign ticket to user because, user not found for the given id");
 	}
 }

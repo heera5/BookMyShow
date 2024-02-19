@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.bootproject.BookMyShow.entity.Seat;
 import com.example.bootproject.BookMyShow.service.SeatService;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
+
+import jakarta.validation.Valid;
 @RestController
 @RequestMapping("Seat")
 public class SeatController {
@@ -24,7 +27,7 @@ public class SeatController {
 				SeatService seatservice;
 				
 				@PostMapping
-				public ResponseEntity<ResponseStructure<Seat>> saveSeat(@RequestBody Seat seat)
+				public ResponseEntity<ResponseStructure<Seat>> saveSeat(@Valid @RequestBody Seat seat,BindingResult Result)
 				{
 					System.out.println("saved");
 				 return seatservice.saveSeat(seat);

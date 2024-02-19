@@ -1,11 +1,17 @@
 package com.example.bootproject.BookMyShow.exception;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
@@ -128,5 +134,25 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 		 structure.setMessage("no payment received!!!!!!!!!");
 		 structure.setStatus(HttpStatus.NOT_FOUND.value());
 		 return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	
+	@org.springframework.web.bind.annotation.ExceptionHandler
+	public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex)
+	{
+		ResponseStructure<Object> structure = new ResponseStructure<Object>();
+		Map<String, String> hashmap = new HashMap<>();
+		
+		for(ConstraintViolation<?> violation : ex.getConstraintViolations())
+		{
+			String field = violation.getPropertyPath().toString();
+			String message = violation.getMessage();
+			hashmap.put(field, message);
+		}
+		
+		structure.setMessage("add proper details");
+		structure.setStatus(HttpStatus.FORBIDDEN.value());
+		structure.setData(hashmap);
+		
+		return new ResponseEntity<Object>(structure, HttpStatus.BAD_REQUEST);
 	}
 }
