@@ -57,9 +57,9 @@ public class SeatService {
 		}
 		throw new SeatNotFound("seat not updated because,seat not found for the given id");
 	}
-	public ResponseEntity<ResponseStructure<List<Seat>>> findAllSeat(List<Seat> seat) {
+	public ResponseEntity<ResponseStructure<List<Seat>>> findAllSeat() {
 		ResponseStructure<List<Seat>> structure=new ResponseStructure<List<Seat>>();
-		List<Seat> seatList=seatdao.findAllSeat(seat);
+		List<Seat> seatList=seatdao.findAllSeat();
 		structure.setMessage(" find all seat success");
 		structure.setStatus(HttpStatus .FOUND.value());
 		structure.setData(seatList);

@@ -82,7 +82,7 @@ public class TheatreService {
 				 throw new TheatreUnreachable("theatre update failed");
 				}
 		
-		public ResponseEntity<ResponseStructure<List<Theatre>>>  findAllTheatre(List<Theatre> theatrel){
+		public ResponseEntity<ResponseStructure<List<Theatre>>>  findAllTheatre(){
 			ResponseStructure <List<Theatre>>structure=new ResponseStructure<List<Theatre>>();
 			List<Theatre> l=theatredao.findAllTheatre();
 			if(l!=null) {
@@ -94,24 +94,6 @@ public class TheatreService {
 			throw new NoListFound("no list found!!!!!!");
 			}
 		
-//		public ResponseEntity<ResponseStructure<List<Theatre>>> assignscreentotheatre(int theatreid,List<Integer>screenid){
-//			ResponseStructure<Theatre>structure=new ResponseStructure<Theatre>();
-//			ModelMapper mapper=new ModelMapper();
-//			Theatre theatre=theatredao.findTheatre(theatreid);
-//			if(theatre!=null) {
-//				List<Screen>s=screenrepo.findAllById(screenid);
-//				theatre.setListofscreen(s);
-//				theatredao.updateTheatre(theatre, theatreid);
-//				structure.setMessage("screen assigned to theatres");
-//				structure.setStatus(theatreid);
-//				structure.setData(theatre);
-//				return new ResponseEntity<ResponseStructure<List<Theatre>>>(HttpStatus.OK);
-//				
-//				
-//				
-//			}
-//			return null;
-//		}
 		public ResponseEntity<ResponseStructure<Theatre>> addScreenToTheatre(int screenId,int theatreId)
 		{
 			Theatre theatre1=new Theatre();
@@ -120,7 +102,7 @@ public class TheatreService {
 			Theatre theatre = theatredao.findTheatre(theatreId);
 			if(theatre!=null)
 			{
-				    List<Screen> screenList = screendao.findAllScreen(null);
+				    List<Screen> screenList = screendao.findAllScreen();
 				    List<Screen> theatreScreenList = theatre.getListofscreen();
 				    if(theatreScreenList == null)
 				    {

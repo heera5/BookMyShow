@@ -86,13 +86,13 @@ public class UserService {
 			}
 			throw new UserNotFound("User is not there!!!!!!!!");
 			}
-	public ResponseEntity<ResponseStructure<List<User>>>  findAllUser(List<User> user){
+	public ResponseEntity<ResponseStructure<List<User>>>  findAllUser(){
 		
 		ResponseStructure <List<User>>structure=new ResponseStructure<List<User>>();
 		UserDto dto=new UserDto();
 		ModelMapper mapper=new ModelMapper();
-		mapper.map(userdao.findAllUser(user), dto);
-		List<User> s=userdao.findAllUser(user);
+		mapper.map(userdao.findAllUser(), dto);
+		List<User> s=userdao.findAllUser();
 		if(s!=null) {
 			structure.setMessage("list of data ");
 			structure.setStatus(HttpStatus.FOUND.value());

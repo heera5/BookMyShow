@@ -58,9 +58,9 @@ public class ReviewController {
 		}
 		
 		@GetMapping("found all")
-		public ResponseEntity<ResponseStructure<List<Review>>>  findAllReview(@RequestBody List<Review> review){
+		public ResponseEntity<ResponseStructure<List<Review>>>  findAllReview(){
 			System.out.println("found all laptop");
-			return reviewservice.findAllReview(review);
+			return reviewservice.findAllReview();
 		}
 
 }

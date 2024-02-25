@@ -50,7 +50,7 @@ public class ReviewDao {
 					return null;
 				}
 				
-				public List<Review> findAllReview(List<Review> review)
+				public List<Review> findAllReview()
 				{
 					
 					List<Review> exreview =reviewrepo.findAll();

@@ -118,7 +118,7 @@ public ResponseEntity<ResponseStructure<Screen>> addSeatToScreen(int ScreenId,in
 			Screen a=screendao.findScreen(ScreenId);
 			if(a!=null)
 			{
-				    List<Seat> seatList=seatdao.findAllSeat(null);
+				    List<Seat> seatList=seatdao.findAllSeat();
 				    		List<Seat>ob=a.getSeat();
 				    if(ob==null)
 				    {

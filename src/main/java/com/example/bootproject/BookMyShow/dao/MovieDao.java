@@ -50,7 +50,7 @@ public class MovieDao {
 				return null;
 			}
 			
-			public List<Movie> findAllMovie(List<Movie> movie)
+			public List<Movie> findAllMovie()
 			{
 				
 				List<Movie> exmovie =movierepo.findAll();

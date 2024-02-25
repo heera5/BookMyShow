@@ -58,9 +58,9 @@ public class MovieController {
 				
 
 			@GetMapping("found all")
-			public ResponseEntity<ResponseStructure<List<Movie>>>  findAllMovie(@RequestBody List<Movie> movie){
+			public ResponseEntity<ResponseStructure<List<Movie>>>  findAllMovie(){
 				System.out.println("found all laptop");
-				return movieservice.findAllMovie(movie);
+				return movieservice.findAllMovie();
 			}
 			
 			@PutMapping("addreviewtomovie")

@@ -58,9 +58,9 @@ public class AdminController {
 			
 
 		@GetMapping("found all")
-		public ResponseEntity<ResponseStructure<List<Admin>>>  findAllAdmin(@RequestBody List<Admin> admin){
+		public ResponseEntity<ResponseStructure<List<Admin>>>  findAllAdmin(){
 			System.out.println("found all laptop");
-			return adminservice.findAllAdmin(admin);
+			return adminservice.findAllAdmin();
 		}
 	
 		@GetMapping("adminlogin")
@@ -72,7 +72,7 @@ public class AdminController {
 		}
 		
 		@PutMapping("addtheatretoadmin")
-		public ResponseEntity<ResponseStructure<AdminDto>> addTheatreToAdmin(int adminId,int theatreId){
+		public ResponseEntity<ResponseStructure<AdminDto>> addTheatreToAdmin(@RequestParam int adminId,@RequestParam int theatreId){
 
 			System.out.println("Assigning theatre to admin successful");
 			return adminservice.addTheatreToAdmin(adminId, theatreId);
@@ -80,7 +80,7 @@ public class AdminController {
 			
 			
 		@PutMapping("addtheatreadmintoadmin")
-		public ResponseEntity<ResponseStructure<AdminDto>> addTheatreAdminToAdmin(int adminId,int theatreadminId){
+		public ResponseEntity<ResponseStructure<AdminDto>> addTheatreAdminToAdmin(@RequestParam int adminId,@RequestParam int theatreadminId){
 			System.out.println("Assigning theatreadmin to admin successful");
 			return adminservice.addTheatreAdminToAdmin(adminId, theatreadminId);
 		}

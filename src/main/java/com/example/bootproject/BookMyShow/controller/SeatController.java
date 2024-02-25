@@ -54,9 +54,9 @@ public class SeatController {
 				}
 				
 				@GetMapping("found all")
-				public ResponseEntity<ResponseStructure<List<Seat>>>  findAllSeat(@RequestBody List<Seat> seat){
+				public ResponseEntity<ResponseStructure<List<Seat>>>  findAllSeat(){
 					System.out.println("found all laptop");
-					return seatservice.findAllSeat(seat);
+					return seatservice.findAllSeat();
 				}
 
 }

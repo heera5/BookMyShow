@@ -28,7 +28,7 @@ public class TheatreAdminController {
 			@Autowired
 			TheatreAdminService theatreadminservice;
 			
-			@PostMapping("save")
+			@PostMapping
 			public ResponseEntity<ResponseStructure<TheatreAdminDto>> saveTheatreAdmin(@Valid @RequestBody TheatreAdmin theatreadmin,BindingResult Result)
 			{
 				System.out.println("saved");
@@ -54,7 +54,7 @@ public class TheatreAdminController {
 				return theatreadminservice.updateTheatreAdmin(theatreadmin, theatreadminid);
 			}
 			@GetMapping("assigntota")	
-			public ResponseEntity<ResponseStructure<TheatreAdminDto>> assignTheatreToTheatreAdmin(int theatreAdminId,int theatreId){
+			public ResponseEntity<ResponseStructure<TheatreAdminDto>> assignTheatreToTheatreAdmin(@RequestParam int theatreAdminId,@RequestParam int theatreId){
 				System.out.println("assigned theatre to theatreadmin");
 				return theatreadminservice.assignTheatreToTheatreAdmin(theatreAdminId, theatreId);
 				

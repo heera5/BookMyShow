@@ -50,7 +50,7 @@ public class TheatreAdminDao {
 		return null;
 	}
 	
-	public List<TheatreAdmin> findAllTheatreAdmin(List<TheatreAdmin> theatreadmin)
+	public List<TheatreAdmin> findAllTheatreAdmin()
 	{
 		
 		List<TheatreAdmin> extheatreadmin =theatreadminrepo.findAll();

@@ -49,7 +49,7 @@ public class AdminDao {
 		return null;
 	}
 	
-	public List<Admin> findAllAdmin(List<Admin> admin)
+	public List<Admin> findAllAdmin()
 	{
 		
 		List<Admin> exadmin =adminrepo.findAll();

@@ -59,9 +59,9 @@ public class PaymentService {
 		}
 		throw new NoPaymentReceived("payment not updated because,payment not found for the given id");
 	}
-	public ResponseEntity<ResponseStructure<List<Payment>>> findAllPayment(List<Payment> payment) {
+	public ResponseEntity<ResponseStructure<List<Payment>>> findAllPayment() {
 		ResponseStructure<List<Payment>> structure=new ResponseStructure<List<Payment>>();
-		List<Payment> paymentList=paymentdao.findAllPayment(payment);
+		List<Payment> paymentList=paymentdao.findAllPayment();
 		structure.setMessage(" find all payment success");
 		structure.setStatus(HttpStatus .FOUND.value());
 		structure.setData(paymentList);

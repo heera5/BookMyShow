@@ -57,10 +57,10 @@ public class UserController {
 				
 
 			@GetMapping("found all")
-			public ResponseEntity<ResponseStructure<List<User>>>  findAllUser(List<User> user)
+			public ResponseEntity<ResponseStructure<List<User>>>  findAllUser()
 			{
 				System.out.println("found all user");
-				return userservice.findAllUser(user);
+				return userservice.findAllUser();
 			}
 			
 			@PutMapping("userlogin")

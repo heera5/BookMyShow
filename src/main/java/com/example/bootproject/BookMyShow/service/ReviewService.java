@@ -75,11 +75,11 @@ public class ReviewService {
 				 throw new ReviewNotFound("review update failed");
 				}
 
-		public ResponseEntity<ResponseStructure<List<Review>>> findAllReview(List<Review> review) {
+		public ResponseEntity<ResponseStructure<List<Review>>> findAllReview() {
 			ResponseStructure<List<Review>> structure=new ResponseStructure<List<Review>>();
 			structure.setMessage("find all Review successfull");
 			structure.setStatus(HttpStatus .FOUND.value());
-			structure.setData(reviewdao.findAllReview(review) );
+			structure.setData(reviewdao.findAllReview() );
 			return new ResponseEntity<ResponseStructure<List<Review>>>(structure,HttpStatus.FOUND);
 		}
 		

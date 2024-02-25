@@ -90,13 +90,13 @@ public class MovieService {
 			}
 			throw new NoMovieFound("movie is not there!!!!!!!!");
 			}
-	public ResponseEntity<ResponseStructure<List<Movie>>>  findAllMovie(List<Movie> movie){
+	public ResponseEntity<ResponseStructure<List<Movie>>>  findAllMovie(){
 		
 		ResponseStructure <List<Movie>>structure=new ResponseStructure<List<Movie>>();
 		MovieDto dto=new MovieDto();
 		ModelMapper mapper=new ModelMapper();
-		mapper.map(moviedao.findAllMovie(movie), dto);
-		List<Movie> s=moviedao.findAllMovie(movie);
+		mapper.map(moviedao.findAllMovie(), dto);
+		List<Movie> s=moviedao.findAllMovie();
 		if(s!=null) {
 			structure.setMessage("list of data ");
 			structure.setStatus(HttpStatus.FOUND.value());
@@ -131,7 +131,7 @@ public class MovieService {
 		Movie movie = moviedao.findMovie(movieId);
 		if(movie!=null)
 		{
-			    List<Review> reviewList = reviewdao.findAllReview(null);
+			    List<Review> reviewList = reviewdao.findAllReview();
 			    List<Review> movieReview = movie.getReview();
 			    if(movieReview==null)
 			    {

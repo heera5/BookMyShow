@@ -106,13 +106,13 @@ public class AdminService {
 				}
 				throw new AdminNotFound("admin is not there to update!!!!!!!!");
 				}
-		public ResponseEntity<ResponseStructure<List<Admin>>>  findAllAdmin(List<Admin> admin){
+		public ResponseEntity<ResponseStructure<List<Admin>>>  findAllAdmin(){
 			
 			ResponseStructure <List<Admin>>structure=new ResponseStructure<List<Admin>>();
 			AdminDto dto=new AdminDto();
 			ModelMapper mapper=new ModelMapper();
-			mapper.map(admindao.findAllAdmin(admin), dto);
-			List<Admin> s=admindao.findAllAdmin(admin);
+			mapper.map(admindao.findAllAdmin(), dto);
+			List<Admin> s=admindao.findAllAdmin();
 			if(s!=null) {
 				structure.setMessage("list of data ");
 				structure.setStatus(HttpStatus.FOUND.value());
@@ -238,7 +238,7 @@ public ResponseEntity<ResponseStructure<AdminDto>> addTheatreAdminToAdmin(int ad
 			Admin a=admindao.findAdmin(adminId);
 			if(a!=null)
 			{
-				    List<TheatreAdmin> theatreadminList=theatreadmindao.findAllTheatreAdmin(null);
+				    List<TheatreAdmin> theatreadminList=theatreadmindao.findAllTheatreAdmin();
 				    List<TheatreAdmin>Theatreadmin=a.getTheatreadmin();
 				    if(Theatreadmin==null)
 				    {

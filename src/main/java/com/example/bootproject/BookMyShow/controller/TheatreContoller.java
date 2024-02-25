@@ -55,9 +55,9 @@ public class TheatreContoller {
 		}
 		
 		@PutMapping("allTheatre")
-		public ResponseEntity<ResponseStructure<List<Theatre>>>  findAllTheatre(@RequestBody List<Theatre> theatrel){
+		public ResponseEntity<ResponseStructure<List<Theatre>>>  findAllTheatre(){
 			System.out.println("list od theatre");
-			return theatreservice.findAllTheatre(theatrel);
+			return theatreservice.findAllTheatre();
 		
 		
 		}

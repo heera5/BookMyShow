@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.bootproject.BookMyShow.entity.Payment;
 import com.example.bootproject.BookMyShow.service.PaymentService;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
+
+import jakarta.validation.Valid;
 @RestController
 @RequestMapping("Payment")
 public class PaymentController {
@@ -24,7 +27,7 @@ public class PaymentController {
 			PaymentService paymentservice;
 			
 			@PostMapping
-			public ResponseEntity<ResponseStructure<Payment>> savePayment(@RequestBody Payment payment)
+			public ResponseEntity<ResponseStructure<Payment>> savePayment(@Valid @RequestBody Payment payment,BindingResult Result)
 			{
 				System.out.println("saved");
 			 return paymentservice.savePayment(payment);
@@ -51,9 +54,9 @@ public class PaymentController {
 			}
 			
 			@GetMapping("found all")
-			public ResponseEntity<ResponseStructure<List<Payment>>>  findAllPayment(@RequestBody List<Payment> payment){
+			public ResponseEntity<ResponseStructure<List<Payment>>>  findAllPayment(){
 				System.out.println("found all laptop");
-				return paymentservice.findAllPayment(payment);
+				return paymentservice.findAllPayment();
 			}
 
 }

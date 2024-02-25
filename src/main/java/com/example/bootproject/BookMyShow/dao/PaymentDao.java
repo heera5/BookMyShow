@@ -52,7 +52,7 @@ public class PaymentDao {
 		return null;
 	}
 	
-	public List<Payment> findAllPayment(List<Payment> payment)
+	public List<Payment> findAllPayment()
 	{
 		
 		List<Payment> expayment =paymentrepo.findAll();

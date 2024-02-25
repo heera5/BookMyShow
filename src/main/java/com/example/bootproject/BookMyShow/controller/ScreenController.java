@@ -69,7 +69,7 @@ public class ScreenController {
 			return screenservice.findSeatAvailability(screenid, seatType);
 		}
 		@GetMapping("assignmovietoscreen")
-		public ResponseEntity<ResponseStructure<Screen>> assignMovieToScreen(int movieId,int screenId){
+		public ResponseEntity<ResponseStructure<Screen>> assignMovieToScreen(@RequestParam int movieId,@RequestParam int screenId){
 
 			System.out.println("updated");
 			return screenservice.assignMovieToScreen(movieId, screenId);

@@ -50,7 +50,7 @@ public class UserDao {
 			return null;
 		}
 		
-		public List<User> findAllUser(List<User> user)
+		public List<User> findAllUser()
 		{
 			
 			List<User> exuser =userrepo.findAll();

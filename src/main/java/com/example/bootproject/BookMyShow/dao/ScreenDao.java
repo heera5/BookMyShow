@@ -51,7 +51,7 @@ public class ScreenDao {
 					return null;
 				}
 				
-				public List<Screen> findAllScreen(List<Screen> screen)
+				public List<Screen> findAllScreen()
 				{
 					
 					List<Screen> exscreen =screenrepo.findAll();

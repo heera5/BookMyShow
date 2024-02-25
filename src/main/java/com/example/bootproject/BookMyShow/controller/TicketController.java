@@ -1,5 +1,6 @@
 package com.example.bootproject.BookMyShow.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.bootproject.BookMyShow.entity.Payment;
+import com.example.bootproject.BookMyShow.entity.SeatType;
 import com.example.bootproject.BookMyShow.entity.Ticket;
 import com.example.bootproject.BookMyShow.service.TicketService;
 import com.example.bootproject.BookMyShow.util.ResponseStructure;
@@ -55,9 +58,9 @@ public class TicketController {
 				}
 				
 				@GetMapping("found all")
-				public ResponseEntity<ResponseStructure<List<Ticket>>>  findAllTicket(@RequestBody List<Ticket> ticket){
+				public ResponseEntity<ResponseStructure<List<Ticket>>>  findAllTicket(){
 					System.out.println("found all ticket");
-					return ticketservice.findAllTicket(ticket);
+					return ticketservice.findAllTicket();
 				}
 				@GetMapping("assign")
 				public ResponseEntity<ResponseStructure<Ticket>> assignPaymentToTicket(@RequestParam int paymentId,@RequestParam int ticketId){
@@ -65,4 +68,11 @@ public class TicketController {
 					return ticketservice.assignPaymentToTicket(paymentId, ticketId);
 				}
 				
-}
+				@PutMapping("ticketbooking")
+				public ResponseEntity<ResponseStructure<Ticket>> ticketBooking(@RequestParam String userEmail,@RequestParam String userPassword,@RequestParam int movieId,
+					@RequestBody	Payment payment){
+					System.out.println(" ticketbooking don!!!!!!!!!!!!");
+					return ticketservice.ticketBooking(userEmail, userPassword, movieId, payment);
+				}
+				}
+

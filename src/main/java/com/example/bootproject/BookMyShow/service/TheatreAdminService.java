@@ -94,8 +94,8 @@ public class TheatreAdminService {
 		ResponseStructure <List<TheatreAdmin>>structure=new ResponseStructure<List<TheatreAdmin>>();
 		TheatreAdminDto dto=new TheatreAdminDto();
 		ModelMapper mapper=new ModelMapper();
-		mapper.map(theatreadmindao.findAllTheatreAdmin(admin), dto);
-		List<TheatreAdmin> s=theatreadmindao.findAllTheatreAdmin(admin);
+		mapper.map(theatreadmindao.findAllTheatreAdmin(), dto);
+		List<TheatreAdmin> s=theatreadmindao.findAllTheatreAdmin();
 		if(s!=null) {
 			structure.setMessage("list of data ");
 			structure.setStatus(HttpStatus.FOUND.value());
@@ -129,7 +129,7 @@ public class TheatreAdminService {
 	}
 	
 	public ResponseEntity<ResponseStructure<TheatreAdmin>>theatreadminlogin(String theatreadminemail,String theatreadminpassword){
-		List<TheatreAdmin> theatreAdmin=theatreadmindao.findAllTheatreAdmin(null);
+		List<TheatreAdmin> theatreAdmin=theatreadmindao.findAllTheatreAdmin();
 			if(theatreadmin.getTheatreAdminEmail().equals(theatreadminemail))
 			{
 				if(theatreadmin.getTheatreAdminPassword().equals(theatreadminpassword)) {

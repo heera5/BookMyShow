@@ -37,7 +37,7 @@ public class SeatDao {
 		}
 		return null;
 	}
-	public List<Seat> findAllSeat(List<Seat> seat) {
+	public List<Seat> findAllSeat() {
 		return seatrepo.findAll();
 	}
 	
